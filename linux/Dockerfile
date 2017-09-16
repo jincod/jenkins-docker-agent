@@ -19,9 +19,11 @@ RUN apt-get update \
     gettext \
   && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sSL -o dotnet.tar.gz https://download.microsoft.com/download/1/B/4/1B4DE605-8378-47A5-B01B-2C79D6C55519/dotnet-sdk-2.0.0-linux-x64.tar.gz
-RUN mkdir -p /opt/dotnet && tar zxf dotnet.tar.gz -C /opt/dotnet
-RUN ln -s /opt/dotnet/dotnet /usr/local/bin
+RUN curl -sSL -o dotnet.tar.gz https://download.microsoft.com/download/1/B/4/1B4DE605-8378-47A5-B01B-2C79D6C55519/dotnet-sdk-2.0.0-linux-x64.tar.gz \
+    && mkdir -p /opt/dotnet \
+    && tar zxf dotnet.tar.gz -C /opt/dotnet \
+    && rm dotnet.tar.gz \
+    && ln -s /opt/dotnet/dotnet /usr/local/bin
 
 # mono
 ENV MONO_VERSION 4.8.0.495
