@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-windowsservercore
+FROM openjdk:9.0.1-jdk-windowsservercore-1709
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
@@ -30,8 +30,8 @@ RUN Invoke-WebRequest $('https://github.com/git-for-windows/git/releases/downloa
 
 # node.js
 ARG NPM_CONFIG_LOGLEVEL=info
-ARG NODE_VERSION=6.11.2
-ARG NODE_SHA256=ce57b050e11b3b8d46e18c85512384c8e2b1c0bd9f7832ba9786e175152a02a0
+ARG NODE_VERSION=8.9.3
+ARG NODE_SHA256=68cdd5a021101a208d830da016eebb3a9de5ba75e76d8d8d6e9332038f10f56a
 
 RUN Invoke-WebRequest $('https://nodejs.org/dist/v{0}/node-v{0}-x64.msi' -f $env:NODE_VERSION) -OutFile node.msi -UseBasicParsing ; \
     if ((Get-FileHash node.msi -Algorithm sha256).Hash -ne $env:NODE_SHA256) {exit 1} ; \
