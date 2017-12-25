@@ -1,4 +1,4 @@
-FROM openjdk:9.0.1-jdk-windowsservercore-1709
+FROM openjdk:9.0.1-jdk-windowsservercore-ltsc2016
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
