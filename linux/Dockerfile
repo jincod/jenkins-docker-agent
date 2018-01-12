@@ -23,6 +23,13 @@ RUN apt-get update \
   && apt-get install -y \
     docker-ce
 
+# Ansible
+RUN apt-get update \
+  & apt-get install -y software-properties-common \
+  & apt-add-repository "deb http://ppa.launchpad.net/ansible/ansible/ubuntu xenial main " \
+  & apt-get update \
+  & apt-get install -y ansible
+
 # dotnet
 RUN apt-get update \
   && apt-get install -y -q \
