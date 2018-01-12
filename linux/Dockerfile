@@ -38,7 +38,7 @@ RUN apt-get update \
     gettext \
   && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sSL -o dotnet.tar.gz https://download.microsoft.com/download/D/7/2/D725E47F-A4F1-4285-8935-A91AE2FCC06A/dotnet-sdk-2.0.3-linux-x64.tar.gz \
+RUN curl -sSL -o dotnet.tar.gz https://download.microsoft.com/download/1/1/5/115B762D-2B41-4AF3-9A63-92D9680B9409/dotnet-sdk-2.1.4-linux-x64.tar.gz \
     && mkdir -p /opt/dotnet \
     && tar zxf dotnet.tar.gz -C /opt/dotnet \
     && rm dotnet.tar.gz \
