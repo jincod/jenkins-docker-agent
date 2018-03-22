@@ -1,11 +1,12 @@
 FROM openjdk:9.0.1-jdk-windowsservercore-ltsc2016
 
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+
 RUN NET USER jenkins /add
 RUN NET LOCALGROUP Administrators /add jenkins
+RUN Set-LocalUser -Name jenkins -PasswordNeverExpires 1
 
 USER jenkins
-
-SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # .NET Framwork v4.6.2
 RUN Invoke-WebRequest "https://download.microsoft.com/download/E/F/D/EFD52638-B804-4865-BB57-47F4B9C80269/NDP462-DevPack-KB3151934-ENU.exe" -OutFile NDP462-DevPack-KB3151934-ENU.exe -UseBasicParsing; \
