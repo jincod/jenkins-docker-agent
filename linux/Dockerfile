@@ -26,7 +26,7 @@ RUN apt-get update \
 # Ansible
 RUN apt-get update \
   & apt-get install -y software-properties-common \
-  & apt-add-repository "deb http://ppa.launchpad.net/ansible/ansible/ubuntu xenial main " \
+  & apt-add-repository "deb http://ppa.launchpad.net/ansible/ansible/ubuntu xenial main" \
   & apt-get update \
   & apt-get install -y ansible
 
