@@ -64,6 +64,9 @@ ENV JENKINS_URL= \
 RUN Invoke-WebRequest -Uri $('https://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/{0}/remoting-{0}.jar' -f $env:VERSION) -UseBasicParsing -OutFile slave.jar; \
     mkdir \jenkins
 
+RUN git config --global user.email "jenkins.slave@example.com"; \
+    git config --global user.name "Jenkins"
+
 # VOLUME C:\\jenkins
 
 CMD java -jar slave.jar -noCertificateCheck -jnlpUrl $env:JENKINS_URL/computer/$env:JENKINS_AGENT_NAME/slave-agent.jnlp -secret $env:JENKINS_SECRET
