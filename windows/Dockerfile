@@ -1,26 +1,29 @@
 FROM openjdk:9.0.1-jdk-windowsservercore-ltsc2016
 
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+
 RUN NET USER jenkins /add
 RUN NET LOCALGROUP Administrators /add jenkins
+RUN Set-LocalUser -Name jenkins -PasswordNeverExpires 1
 
 USER jenkins
 
-SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
-
-# .NET Framwork v4.6.2
-RUN Invoke-WebRequest "https://download.microsoft.com/download/E/F/D/EFD52638-B804-4865-BB57-47F4B9C80269/NDP462-DevPack-KB3151934-ENU.exe" -OutFile NDP462-DevPack-KB3151934-ENU.exe -UseBasicParsing; \
-    cmd /c start /WAIT NDP462-DevPack-KB3151934-ENU.exe /install /quiet; \
-    rm NDP462-DevPack-KB3151934-ENU.exe
-
-# .NET Framwork v4.7.1
-RUN Invoke-WebRequest "https://download.microsoft.com/download/9/0/1/901B684B-659E-4CBD-BEC8-B3F06967C2E7/NDP471-DevPack-ENU.exe" -OutFile NDP471-DevPack-ENU.exe -UseBasicParsing; \
-    cmd /c start /WAIT NDP471-DevPack-ENU.exe /install /quiet /norestart; \
-    rm NDP471-DevPack-ENU.exe
-
-# MSBuid 14.0
-RUN Invoke-WebRequest "https://download.microsoft.com/download/E/E/D/EEDF18A8-4AED-4CE0-BEBE-70A83094FC5A/BuildTools_Full.exe" -OutFile BuildTools_Full.exe -UseBasicParsing; \
-    cmd /c start /WAIT BuildTools_Full.exe /Silent /Full; \
-    rm BuildTools_Full.exe
+# .NET Framework and Build Tools
+RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/11923325/e64d79b40219aea618ce2fe10ebd5f0d/vs_BuildTools.exe" -OutFile vs_BuildTools.exe -UseBasicParsing; \
+    Start-Process -Wait -PassThru -FilePath vs_BuildTools.exe -ArgumentList '--add Microsoft.VisualStudio.Workload.NetCoreBuildTools \
+        --add Microsoft.VisualStudio.Workload.WebBuildTools \
+        --add Microsoft.VisualStudio.Workload.MSBuildTools \
+        --add Microsoft.Net.Core.Component.SDK \
+        --add Microsoft.Net.Component.3.5.DeveloperTools \
+        --add Microsoft.Net.ComponentGroup.TargetingPacks.Common \
+        --add Microsoft.Net.ComponentGroup.4.6.2.DeveloperTools \
+        --add Microsoft.Net.ComponentGroup.4.7.DeveloperTools \
+        --add Microsoft.Net.ComponentGroup.4.7.1.DeveloperTools \
+        --add Microsoft.VisualStudio.Component.NuGet.BuildTools \
+        --quiet \
+        --nocache \
+        --wait'; \
+    rm vs_BuildTools.exe
 
 # Web.targets
 RUN Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile nuget.exe -UseBasicParsing; \
