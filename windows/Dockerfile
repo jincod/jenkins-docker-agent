@@ -43,8 +43,8 @@ RUN [System.Net.ServicePointManager]::SecurityProtocol = 3072 -bor 768 -bor 192 
     cmd /c start /WAIT git-installer.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /NOCANCEL /SP- /LOG /o:UseCredentialManager=Disabled; \
     rm git-installer.exe
 
-ARG GIT_MAIL_ADDRESS=2.11.1
-ARG GIT_USERNAME=2.11.1
+ARG GIT_MAIL_ADDRESS=jenkins.slave@example.com
+ARG GIT_USERNAME=Jenkins
 
 RUN git config --global user.email "$env:GIT_MAIL_ADDRESS"; \
     git config --global user.name "$env:GIT_USERNAME"
