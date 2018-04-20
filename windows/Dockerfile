@@ -9,12 +9,14 @@ RUN Set-LocalUser -Name jenkins -PasswordNeverExpires 1
 USER jenkins
 
 # .NET Framework and Build Tools
+# https://docs.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools
 RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/11923325/e64d79b40219aea618ce2fe10ebd5f0d/vs_BuildTools.exe" -OutFile vs_BuildTools.exe -UseBasicParsing; \
     Start-Process -Wait -PassThru -FilePath vs_BuildTools.exe -ArgumentList '--add Microsoft.VisualStudio.Workload.NetCoreBuildTools \
         --add Microsoft.VisualStudio.Workload.WebBuildTools \
         --add Microsoft.VisualStudio.Workload.MSBuildTools \
         --add Microsoft.Net.Core.Component.SDK \
         --add Microsoft.Net.Component.3.5.DeveloperTools \
+        --add Microsoft.Net.Component.4.5.2.TargetingPack \
         --add Microsoft.Net.ComponentGroup.TargetingPacks.Common \
         --add Microsoft.Net.ComponentGroup.4.6.2.DeveloperTools \
         --add Microsoft.Net.ComponentGroup.4.7.DeveloperTools \
