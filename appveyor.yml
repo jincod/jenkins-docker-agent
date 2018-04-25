@@ -1,15 +1,17 @@
 version: 1.0.{build}
-image: Visual Studio 2017
+
+image:
+- Visual Studio 2017
+- ubuntu
 
 build_script:
-  - docker build -t jenkins-slave-windows .\windows
-  - docker build -t jenkins-slave-linux .\linux
+  - cmd: docker build -t jenkins-slave-windows .\windows
+  - sh: docker build -t jenkins-slave-linux .\linux
 
-artifacts:
-  - path: '*.tag.gz'
+# artifacts:
+#   - path: '*.tag.gz'
 
-after_build:
-  - ps: docker save jenkins-slave-windows --output jenkins-slave-windows.tar.gz
-  - ps: docker save jenkins-slave-linux --output jenkins-slave-linux.tar.gz
-  - ps: docker images
-  - ps: Get-ChildItem .\*.tar.gz | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+# after_build:
+#   - cmd: docker save jenkins-slave-windows --output jenkins-slave-windows.tar.gz
+#   - sh: docker save jenkins-slave-linux --output jenkins-slave-linux.tar.gz
+#   - ps: Get-ChildItem .\*.tar.gz | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
