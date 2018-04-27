@@ -1,4 +1,4 @@
-FROM jenkinsci/jnlp-slave
+FROM jenkins/jnlp-slave:3.19-1
 
 USER root
 

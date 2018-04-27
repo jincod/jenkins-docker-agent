@@ -1,4 +1,4 @@
-FROM openjdk:9.0.1-jdk-windowsservercore-ltsc2016
+FROM openjdk:9.0.4-jdk-windowsservercore-ltsc2016
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
@@ -9,8 +9,9 @@ RUN Set-LocalUser -Name jenkins -PasswordNeverExpires 1
 USER jenkins
 
 # .NET Framework and Build Tools
+# https://www.visualstudio.com/downloads/#other
 # https://docs.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools
-RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/11923325/e64d79b40219aea618ce2fe10ebd5f0d/vs_BuildTools.exe" -OutFile vs_BuildTools.exe -UseBasicParsing; \
+RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/12135701/e64d79b40219aea618ce2fe10ebd5f0d/vs_BuildTools.exe" -OutFile vs_BuildTools.exe -UseBasicParsing; \
     Start-Process -Wait -PassThru -FilePath vs_BuildTools.exe -ArgumentList '--add Microsoft.VisualStudio.Workload.NetCoreBuildTools \
         --add Microsoft.VisualStudio.Workload.WebBuildTools \
         --add Microsoft.VisualStudio.Workload.MSBuildTools \
@@ -61,7 +62,7 @@ RUN Invoke-WebRequest $('https://nodejs.org/dist/v{0}/node-v{0}-x64.msi' -f $env
     Start-Process -FilePath msiexec -ArgumentList /q, /i, node.msi -Wait ; \
     rm node.msi
 
-ARG VERSION=3.9
+ARG VERSION=3.20
 
 ENV JENKINS_URL= \
     JENKINS_AGENT_NAME= \
