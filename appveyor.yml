@@ -6,7 +6,7 @@ image:
 
 build_script:
   - cmd: docker build -t jenkins-slave-windows .\windows
-  - sh: docker build -t jenkins-slave-linux .\linux
+  - sh: docker build -t jenkins-slave-linux ./linux
 
 # artifacts:
 #   - path: '*.tag.gz'
