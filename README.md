@@ -1,5 +1,8 @@
 # Jenkins slave Docker images
 
+[![Build status](https://ci.appveyor.com/api/projects/status/t54hav6qci21bkr2?svg=true)](https://ci.appveyor.com/project/jincod/docker-jenkins-slave)
+
+
 ## Linux
 
 Based on [jnlp-slave](https://github.com/jenkinsci/docker-jnlp-slave)
