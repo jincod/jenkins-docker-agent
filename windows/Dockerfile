@@ -11,18 +11,27 @@ USER jenkins
 # .NET Framework and Build Tools
 # https://www.visualstudio.com/downloads/#other
 # https://docs.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools
-RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/12135701/e64d79b40219aea618ce2fe10ebd5f0d/vs_BuildTools.exe" -OutFile vs_BuildTools.exe -UseBasicParsing; \
+# --add Microsoft.VisualStudio.Workload.NodeBuildTools \
+RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/12221253/e64d79b40219aea618ce2fe10ebd5f0d/vs_BuildTools.exe" -OutFile vs_BuildTools.exe -UseBasicParsing; \
     Start-Process -Wait -PassThru -FilePath vs_BuildTools.exe -ArgumentList '--add Microsoft.VisualStudio.Workload.NetCoreBuildTools \
         --add Microsoft.VisualStudio.Workload.WebBuildTools \
         --add Microsoft.VisualStudio.Workload.MSBuildTools \
-        --add Microsoft.Net.Core.Component.SDK \
-        --add Microsoft.Net.Component.3.5.DeveloperTools \
+        --add Microsoft.Net.Component.4.5.1.TargetingPack \
         --add Microsoft.Net.Component.4.5.2.TargetingPack \
+        --add Microsoft.Net.Component.4.5.TargetingPack \
+        --add Microsoft.Net.Component.4.6.TargetingPack \
+        --add Microsoft.Net.Component.4.TargetingPack \
         --add Microsoft.Net.ComponentGroup.TargetingPacks.Common \
+        --add Microsoft.Net.Component.3.5.DeveloperTools \
+        --add Microsoft.Net.Component.4.6.2.SDK \
+        --add Microsoft.Net.Component.4.6.2.TargetingPack \
+        --add Microsoft.Net.Component.4.7.1.SDK \
+        --add Microsoft.Net.Component.4.7.1.TargetingPack \
+        --add Microsoft.Net.Component.4.7.SDK \
+        --add Microsoft.Net.Component.4.7.TargetingPack \
         --add Microsoft.Net.ComponentGroup.4.6.2.DeveloperTools \
-        --add Microsoft.Net.ComponentGroup.4.7.DeveloperTools \
         --add Microsoft.Net.ComponentGroup.4.7.1.DeveloperTools \
-        --add Microsoft.VisualStudio.Component.NuGet.BuildTools \
+        --add Microsoft.Net.ComponentGroup.4.7.DeveloperTools \
         --quiet \
         --nocache \
         --wait'; \
