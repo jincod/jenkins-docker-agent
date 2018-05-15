@@ -18,7 +18,7 @@ docker run -v /var/run/docker.sock:/var/run/docker.sock --env JENKINS_URL=https:
 
 ## Windows
 
-Based on [9.0.1-jdk-windowsservercore-1709](https://github.com/docker-library/openjdk/blob/master/9-jdk/windows/windowsservercore-1709/Dockerfile)
+Based on [9.0.4-jdk-windowsservercore-ltsc2016](https://github.com/docker-library/openjdk/blob/master/9-jdk/windows/windowsservercore-ltsc2016/Dockerfile)
 
 ### Usage
 
