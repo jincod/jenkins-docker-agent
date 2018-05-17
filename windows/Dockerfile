@@ -8,11 +8,16 @@ RUN Set-LocalUser -Name jenkins -PasswordNeverExpires 1
 
 USER jenkins
 
-# .NET Framework and Build Tools
+# Install .NET 4.7.2
+RUN Invoke-WebRequest "https://download.microsoft.com/download/5/A/3/5A3607CA-53B1-4717-8845-4389B11931FA/NDP472-KB4054530-x86-x64-AllOS-ENU.exe" -OutFile dotnet-framework-installer.exe; \
+    Start-Process -Wait -PassThru -FilePath dotnet-framework-installer.exe -ArgumentList '/q'; \
+    rm dotnet-framework-installer.exe
+
+# Build Tools
 # https://www.visualstudio.com/downloads/#other
 # https://docs.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools
-# --add Microsoft.VisualStudio.Workload.NodeBuildTools \
 RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/12221253/e64d79b40219aea618ce2fe10ebd5f0d/vs_BuildTools.exe" -OutFile vs_BuildTools.exe -UseBasicParsing; \
+    setx /M DOTNET_SKIP_FIRST_TIME_EXPERIENCE 1; \
     Start-Process -Wait -PassThru -FilePath vs_BuildTools.exe -ArgumentList '--add Microsoft.VisualStudio.Workload.NetCoreBuildTools \
         --add Microsoft.VisualStudio.Workload.WebBuildTools \
         --add Microsoft.VisualStudio.Workload.MSBuildTools \
@@ -34,6 +39,7 @@ RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/1
         --add Microsoft.Net.ComponentGroup.4.7.DeveloperTools \
         --quiet \
         --nocache \
+        --norestart \
         --wait'; \
     rm vs_BuildTools.exe
 
