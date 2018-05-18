@@ -2,18 +2,18 @@ FROM openjdk:9.0.4-jdk-windowsservercore-ltsc2016
 
 SHELL ["cmd", "/S", "/C"]
 
+RUN NET USER jenkins /add & \
+    NET LOCALGROUP Administrators /add jenkins & \
+    WMIC USERACCOUNT WHERE Name='jenkins' SET PasswordExpires=FALSE
+
+USER jenkins
+
 # # Install .NET 4.7.2
 RUN powershell Invoke-WebRequest -Uri "https://download.microsoft.com/download/5/A/3/5A3607CA-53B1-4717-8845-4389B11931FA/NDP472-KB4054530-x86-x64-AllOS-ENU.exe" -OutFile dotnet-framework-installer.exe & \
     .\dotnet-framework-installer.exe /q & \
     del .\dotnet-framework-installer.exe
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
-
-RUN NET USER jenkins /add
-RUN NET LOCALGROUP Administrators /add jenkins
-RUN Set-LocalUser -Name jenkins -PasswordNeverExpires 1
-
-USER jenkins
 
 # Build Tools
 # https://www.visualstudio.com/downloads/#other
