@@ -55,16 +55,15 @@ RUN Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.e
 
 # GIT
 # https://support.cloudbees.com/hc/en-us/articles/221046888-Build-Hang-or-Fail-with-Git-for-Windows
-ENV GIT_VERSION=2.11.1
+ARG GIT_VERSION=2.11.1
+ARG GIT_MAIL_ADDRESS=jenkins.slave@example.com
+ARG GIT_USERNAME=Jenkins
 
 # Set certificate policy to allow connections for SSL3, TLS, TLS12 and TLS12
 RUN [System.Net.ServicePointManager]::SecurityProtocol = 3072 -bor 768 -bor 192 -bor 48; \
     Invoke-WebRequest $('https://github.com/git-for-windows/git/releases/download/v{0}.windows.1/Git-{0}-64-bit.exe' -f $env:GIT_VERSION) -OutFile git-installer.exe -UseBasicParsing; \
     cmd /c start /WAIT git-installer.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /NOCANCEL /SP- /LOG /o:UseCredentialManager=Disabled; \
     rm git-installer.exe
-
-ARG GIT_MAIL_ADDRESS=jenkins.slave@example.com
-ARG GIT_USERNAME=Jenkins
 
 RUN git config --global user.email "$env:GIT_MAIL_ADDRESS"; \
     git config --global user.name "$env:GIT_USERNAME"
