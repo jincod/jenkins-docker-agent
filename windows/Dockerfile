@@ -18,7 +18,7 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 # Build Tools
 # https://www.visualstudio.com/downloads/#other
 # https://docs.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools
-RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/12221253/e64d79b40219aea618ce2fe10ebd5f0d/vs_BuildTools.exe" -OutFile vs_BuildTools.exe -UseBasicParsing; \
+RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/12390436/e64d79b40219aea618ce2fe10ebd5f0d/vs_BuildTools.exe" -OutFile vs_BuildTools.exe -UseBasicParsing; \
     setx /M DOTNET_SKIP_FIRST_TIME_EXPERIENCE 1; \
     Start-Process -Wait -PassThru -FilePath vs_BuildTools.exe -ArgumentList '--add Microsoft.VisualStudio.Workload.NetCoreBuildTools \
         --add Microsoft.VisualStudio.Workload.WebBuildTools \
