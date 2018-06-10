@@ -78,7 +78,7 @@ RUN Invoke-WebRequest $('https://nodejs.org/dist/v{0}/node-v{0}-x64.msi' -f $env
     Start-Process -FilePath msiexec -ArgumentList /q, /i, node.msi -Wait ; \
     rm node.msi
 
-ARG VERSION=3.20
+ARG VERSION=3.21
 
 ENV JENKINS_URL= \
     JENKINS_AGENT_NAME= \
