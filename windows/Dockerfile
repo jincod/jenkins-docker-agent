@@ -91,4 +91,4 @@ RUN Invoke-WebRequest -Uri $('https://repo.jenkins-ci.org/public/org/jenkins-ci/
 
 # VOLUME C:\\jenkins
 
-CMD java -jar slave.jar -noCertificateCheck -jnlpUrl $env:JENKINS_URL/computer/$env:JENKINS_AGENT_NAME/slave-agent.jnlp -secret $env:JENKINS_SECRET
+CMD java -jar slave.jar -jnlpUrl $env:JENKINS_URL/computer/$env:JENKINS_AGENT_NAME/slave-agent.jnlp -secret $env:JENKINS_SECRET
