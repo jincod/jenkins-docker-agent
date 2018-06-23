@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  slave-linux:
+    image: jenkins-slave-linux
+    restart: always
+    environment:
+      --JENKINS_URL=
+      --JENKINS_SECRET=
+      --JENKINS_AGENT_NAME=
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
