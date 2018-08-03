@@ -30,6 +30,19 @@ RUN apt-get update \
   && apt-get update \
   && apt-get install -y --allow-unauthenticated ansible
 
+# AWS CLI
+RUN apt-get update && \
+    apt-get install -y \
+        python3 \
+        python3-pip \
+        python3-setuptools \
+        groff \
+        less \
+    && pip3 install --upgrade pip \
+    && apt-get clean
+
+RUN pip3 --no-cache-dir install --upgrade awscli
+
 # dotnet
 ENV NUGET_XMLDOC_MODE=skip \
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1 \
