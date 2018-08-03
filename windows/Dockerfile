@@ -8,8 +8,8 @@ RUN NET USER jenkins /add & \
 
 USER jenkins
 
-# # Install .NET 4.7.2
-RUN powershell Invoke-WebRequest -Uri "https://download.microsoft.com/download/5/A/3/5A3607CA-53B1-4717-8845-4389B11931FA/NDP472-KB4054530-x86-x64-AllOS-ENU.exe" -OutFile dotnet-framework-installer.exe & \
+# Install .NET 4.7.2
+RUN powershell Invoke-WebRequest -Uri "https://download.microsoft.com/download/3/B/F/3BFB9C35-405D-45DF-BDAF-0EB57D047888/NDP472-DevPack-ENU.exe" -OutFile dotnet-framework-installer.exe & \
     .\dotnet-framework-installer.exe /q & \
     del .\dotnet-framework-installer.exe
 
@@ -86,7 +86,8 @@ ENV JENKINS_URL= \
     USERNAME= \
     USER_TOKEN=
 
-RUN Invoke-WebRequest -Uri $('https://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/{0}/remoting-{0}.jar' -f $env:VERSION) -UseBasicParsing -OutFile slave.jar; \
+RUN [System.Net.ServicePointManager]::SecurityProtocol = 3072 -bor 768 -bor 192 -bor 48; \
+    Invoke-WebRequest -Uri $('https://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/{0}/remoting-{0}.jar' -f $env:VERSION) -UseBasicParsing -OutFile slave.jar; \
     mkdir \jenkins
 
 # VOLUME C:\\jenkins
