@@ -1,9 +1,9 @@
-FROM jenkins/jnlp-slave:3.23-1
+FROM jenkins/jnlp-slave:3.26-1
 
 USER root
 
 # nodejs
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
   && apt-get install -y nodejs
 
 # docker cli
@@ -48,7 +48,7 @@ ENV NUGET_XMLDOC_MODE=skip \
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1 \
   DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-RUN curl -sSL -o dotnet.tar.gz https://download.microsoft.com/download/E/8/A/E8AF2EE0-5DDA-4420-A395-D1A50EEFD83E/dotnet-sdk-2.1.401-linux-x64.tar.gz \
+RUN curl -sSL -o dotnet.tar.gz https://download.visualstudio.microsoft.com/download/pr/e85de743-f80b-481b-b10e-d2e37f05a7ce/0bf3ff93417e19ad8d6b2d3ded84d664/dotnet-sdk-2.1.403-linux-x64.tar.gz \
     && mkdir -p /opt/dotnet \
     && tar zxf dotnet.tar.gz -C /opt/dotnet \
     && rm dotnet.tar.gz \
@@ -65,4 +65,4 @@ deb http://download.mono-project.com/repo/debian wheezy-libjpeg62-compat main" >
   && apt-get install -y binutils mono-devel ca-certificates-mono nuget referenceassemblies-pcl \
   && rm -rf /var/lib/apt/lists/* /tmp/*
 
-USER jenkins
+USER ${user}
