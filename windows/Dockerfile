@@ -70,15 +70,15 @@ RUN git config --global user.email "$env:GIT_MAIL_ADDRESS"; \
 
 # node.js
 ARG NPM_CONFIG_LOGLEVEL=info
-ARG NODE_VERSION=8.9.3
-ARG NODE_SHA256=68cdd5a021101a208d830da016eebb3a9de5ba75e76d8d8d6e9332038f10f56a
+ARG NODE_VERSION=10.14.2
+ARG NODE_SHA256=1e19793063ea30bc0c24fe19502e4b99453044bdf1ce57b6fb351dbbd5da7933
 
 RUN Invoke-WebRequest $('https://nodejs.org/dist/v{0}/node-v{0}-x64.msi' -f $env:NODE_VERSION) -OutFile node.msi -UseBasicParsing ; \
     if ((Get-FileHash node.msi -Algorithm sha256).Hash -ne $env:NODE_SHA256) {exit 1} ; \
     Start-Process -FilePath msiexec -ArgumentList /q, /i, node.msi -Wait ; \
     rm node.msi
 
-ARG VERSION=3.21
+ARG VERSION=3.28
 
 ENV JENKINS_URL= \
     JENKINS_AGENT_NAME= \
