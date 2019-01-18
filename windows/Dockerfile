@@ -16,9 +16,9 @@ RUN powershell Invoke-WebRequest -Uri "https://download.microsoft.com/download/3
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Build Tools
-# https://www.visualstudio.com/downloads/#other
+# https://www.visualstudio.com/downloads/#vstool-2017
 # https://docs.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools
-RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/12390436/e64d79b40219aea618ce2fe10ebd5f0d/vs_BuildTools.exe" -OutFile vs_BuildTools.exe -UseBasicParsing; \
+RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/cbd6f837-08c6-4965-aa4d-99f6699a9689/472e894c5015dcc90e5c367f99d98bb9/vs_buildtools.exe" -OutFile vs_BuildTools.exe -UseBasicParsing; \
     setx /M DOTNET_SKIP_FIRST_TIME_EXPERIENCE 1; \
     Start-Process -Wait -PassThru -FilePath vs_BuildTools.exe -ArgumentList '--add Microsoft.VisualStudio.Workload.NetCoreBuildTools \
         --add Microsoft.VisualStudio.Workload.WebBuildTools \
