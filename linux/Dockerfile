@@ -1,4 +1,4 @@
-FROM jenkins/jnlp-slave:3.27-1
+FROM jenkins/jnlp-slave:3.29-1
 
 USER root
 
@@ -48,7 +48,7 @@ ENV NUGET_XMLDOC_MODE=skip \
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1 \
   DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-RUN curl -sSL -o dotnet.tar.gz https://download.visualstudio.microsoft.com/download/pr/296e116b-30d7-4e1c-8238-ec8c7c4c7b79/43d6cd35d95e38675d472c56a24c3bd0/dotnet-sdk-2.2.103-linux-x64.tar.gz \
+RUN curl -sSL -o dotnet.tar.gz https://download.visualstudio.microsoft.com/download/pr/5e92f45b-384e-41b9-bf8d-c949684e20a1/67a98aa2a4e441245d6afe194bd79b9b/dotnet-sdk-2.2.300-linux-x64.tar.gz \
     && mkdir -p /opt/dotnet \
     && tar zxf dotnet.tar.gz -C /opt/dotnet \
     && rm dotnet.tar.gz \
