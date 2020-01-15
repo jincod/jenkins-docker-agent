@@ -65,4 +65,6 @@ deb http://download.mono-project.com/repo/debian wheezy-libjpeg62-compat main" >
   && apt-get install -y binutils mono-devel ca-certificates-mono nuget referenceassemblies-pcl \
   && rm -rf /var/lib/apt/lists/* /tmp/*
 
+RUN git config --global http.postBuffer 1048576000
+
 USER ${user}
