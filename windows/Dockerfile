@@ -55,7 +55,7 @@ RUN Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.e
 
 # GIT
 # https://support.cloudbees.com/hc/en-us/articles/221046888-Build-Hang-or-Fail-with-Git-for-Windows
-ARG GIT_VERSION=2.25.0
+ARG GIT_VERSION=2.25.1
 ARG GIT_MAIL_ADDRESS=jenkins.slave@example.com
 ARG GIT_USERNAME=Jenkins
 
