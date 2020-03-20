@@ -1,9 +1,9 @@
-FROM jenkins/jnlp-slave:3.35-4
+FROM jenkins/jnlp-slave:4.0.1-1
 
 USER root
 
 # nodejs
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
   && apt-get install -y nodejs
 
 # docker cli
@@ -12,16 +12,17 @@ RUN apt-get update \
     apt-transport-https \
     ca-certificates \
     curl \
+    gnupg-agent \
     software-properties-common \
-  && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - \
+  && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
   && apt-key fingerprint 0EBFCD88 \
   && add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   xenial \
+   "deb [arch=amd64] https://download.docker.com/linux/debian \
+   $(lsb_release -cs) \
    stable" \
   && apt-get update \
-  && apt-get install -y \
-    docker-ce
+  && apt-get install -y --fix-broken \
+    docker-ce docker-ce-cli containerd.io
 
 # Ansible
 RUN apt-get update \
@@ -48,7 +49,7 @@ ENV NUGET_XMLDOC_MODE=skip \
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1 \
   DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-RUN curl -sSL -o dotnet.tar.gz https://download.visualstudio.microsoft.com/download/pr/886b4a4c-30af-454b-8bec-81c72b7b4e1f/d1a0c8de9abb36d8535363ede4a15de6/dotnet-sdk-3.0.100-linux-x64.tar.gz \
+RUN curl -sSL -o dotnet.tar.gz https://download.visualstudio.microsoft.com/download/pr/57e63f03-ebdf-4c22-96ff-2b85dc70cf7f/988576869e82a80f4a97ca5a733a5295/dotnet-sdk-3.1.102-linux-x64.tar.gz \
     && mkdir -p /opt/dotnet \
     && tar zxf dotnet.tar.gz -C /opt/dotnet \
     && rm dotnet.tar.gz \
