@@ -39,10 +39,9 @@ RUN apt-get update && \
         python3-setuptools \
         groff \
         less \
-    && pip3 install --upgrade pip \
-    && apt-get clean
-
-RUN pip3 --no-cache-dir install --upgrade awscli
+    && python3 -m pip install --upgrade pip \
+    && apt-get clean \
+    && python3 -m pip --no-cache-dir install --upgrade awscli
 
 # dotnet
 ENV NUGET_XMLDOC_MODE=skip \
