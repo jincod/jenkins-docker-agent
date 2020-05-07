@@ -1,4 +1,4 @@
-FROM jenkins/jnlp-slave:4.0.1-1
+FROM jenkins/inbound-agent:4.3.4
 
 USER root
 

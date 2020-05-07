@@ -78,7 +78,7 @@ RUN Invoke-WebRequest $('https://nodejs.org/dist/v{0}/node-v{0}-x64.msi' -f $env
     Start-Process -FilePath msiexec -ArgumentList /q, /i, node.msi -Wait ; \
     rm node.msi
 
-ARG VERSION=4.1
+ARG VERSION=4.3
 
 ENV JENKINS_URL= \
     JENKINS_AGENT_NAME= \
@@ -87,9 +87,9 @@ ENV JENKINS_URL= \
     USER_TOKEN=
 
 RUN [System.Net.ServicePointManager]::SecurityProtocol = 3072 -bor 768 -bor 192 -bor 48; \
-    Invoke-WebRequest -Uri $('https://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/{0}/remoting-{0}.jar' -f $env:VERSION) -UseBasicParsing -OutFile slave.jar; \
+    Invoke-WebRequest -Uri $('https://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/{0}/remoting-{0}.jar' -f $env:VERSION) -UseBasicParsing -OutFile remoting.jar; \
     mkdir \jenkins
 
 # VOLUME C:\\jenkins
 
-CMD java -jar slave.jar -jnlpUrl $env:JENKINS_URL/computer/$env:JENKINS_AGENT_NAME/slave-agent.jnlp -secret $env:JENKINS_SECRET
+CMD java -jar remoting.jar -jnlpUrl $env:JENKINS_URL/computer/$env:JENKINS_AGENT_NAME/slave-agent.jnlp -secret $env:JENKINS_SECRET
