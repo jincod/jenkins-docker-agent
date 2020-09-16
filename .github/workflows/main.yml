@@ -45,5 +45,7 @@ jobs:
           echo VERSION=$VERSION
 
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:1.0.$GITHUB_RUN_NUMBER
           docker push $IMAGE_ID:$VERSION
+
+          docker tag $IMAGE_NAME $IMAGE_ID:1.0.$GITHUB_RUN_NUMBER
+          docker push $IMAGE_ID:1.0.$GITHUB_RUN_NUMBER
