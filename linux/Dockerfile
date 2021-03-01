@@ -1,4 +1,4 @@
-FROM jenkins/inbound-agent:4.3-9
+FROM jenkins/inbound-agent:4.6-1
 
 USER root
 
@@ -49,7 +49,7 @@ ENV NUGET_XMLDOC_MODE=skip \
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1 \
   DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-RUN curl -sSL -o dotnet.tar.gz https://download.visualstudio.microsoft.com/download/pr/57e63f03-ebdf-4c22-96ff-2b85dc70cf7f/988576869e82a80f4a97ca5a733a5295/dotnet-sdk-3.1.102-linux-x64.tar.gz \
+RUN curl -sSL -o dotnet.tar.gz https://download.visualstudio.microsoft.com/download/pr/d7b8da76-a160-44a1-8038-b4b91404b8f2/af410f6d2e213ef7ee9dfefd853e97c0/dotnet-sdk-3.1.406-linux-x64.tar.gz \
     && mkdir -p /opt/dotnet \
     && tar zxf dotnet.tar.gz -C /opt/dotnet \
     && rm dotnet.tar.gz \
