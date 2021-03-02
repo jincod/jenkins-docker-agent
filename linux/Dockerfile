@@ -44,6 +44,17 @@ RUN apt-get update && \
     && apt-get clean \
     && python3 -m pip --no-cache-dir install --upgrade awscli
 
+# azure-cli
+RUN apt-get update && \
+    apt-get -f -y install curl apt-transport-https lsb-release gnupg python3-pip python-pip && \
+    curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.asc.gpg && \
+    CLI_REPO=$(lsb_release -cs) && \
+    echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ ${CLI_REPO} main" \
+    > /etc/apt/sources.list.d/azure-cli.list \
+    && apt-get update \
+    && apt-get install -y azure-cli \
+    && rm -rf /var/lib/apt/lists/*
+
 # dotnet
 ENV NUGET_XMLDOC_MODE=skip \
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1 \
