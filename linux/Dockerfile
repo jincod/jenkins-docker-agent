@@ -1,9 +1,9 @@
-FROM jenkins/inbound-agent:4.6-1
+FROM jenkins/inbound-agent:4.10-3
 
 USER root
 
 # nodejs
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
   && apt-get install -y nodejs
 
 # docker cli
@@ -60,21 +60,21 @@ ENV NUGET_XMLDOC_MODE=skip \
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1 \
   DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-RUN curl -sSL -o dotnet.tar.gz https://download.visualstudio.microsoft.com/download/pr/d7b8da76-a160-44a1-8038-b4b91404b8f2/af410f6d2e213ef7ee9dfefd853e97c0/dotnet-sdk-3.1.406-linux-x64.tar.gz \
+RUN curl -sSL -o dotnet.tar.gz https://download.visualstudio.microsoft.com/download/pr/5972698f-ba44-4664-9c50-bdc69ca70fb7/1cf7d94425d8dd4d5789dfa978d61475/dotnet-sdk-5.0.401-linux-x64.tar.gz \
     && mkdir -p /opt/dotnet \
     && tar zxf dotnet.tar.gz -C /opt/dotnet \
     && rm dotnet.tar.gz \
     && ln -s /opt/dotnet/dotnet /usr/local/bin
 
 # mono
-ENV MONO_VERSION 5.10.1.20
+# ENV MONO_VERSION 5.10.1.20
 
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF \
-  && echo "deb http://download.mono-project.com/repo/debian wheezy/snapshots/$MONO_VERSION main\n\
-deb http://download.mono-project.com/repo/debian wheezy-apache24-compat main\n\
-deb http://download.mono-project.com/repo/debian wheezy-libjpeg62-compat main" > /etc/apt/sources.list.d/mono-xamarin.list \
-  && apt-get update \
-  && apt-get install -y binutils mono-devel ca-certificates-mono nuget referenceassemblies-pcl \
-  && rm -rf /var/lib/apt/lists/* /tmp/*
+# RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF \
+#   && echo "deb http://download.mono-project.com/repo/debian wheezy/snapshots/$MONO_VERSION main\n\
+# deb http://download.mono-project.com/repo/debian wheezy-apache24-compat main\n\
+# deb http://download.mono-project.com/repo/debian wheezy-libjpeg62-compat main" > /etc/apt/sources.list.d/mono-xamarin.list \
+#   && apt-get update \
+#   && apt-get install -y binutils mono-devel ca-certificates-mono nuget referenceassemblies-pcl \
+#   && rm -rf /var/lib/apt/lists/* /tmp/*
 
 USER ${user}

@@ -5,7 +5,7 @@
 
 ## Linux
 
-Based on [jnlp-slave](https://github.com/jenkinsci/docker-jnlp-slave)
+Based on [jenkinsci/docker-inbound-agent](https://github.com/jenkinsci/docker-inbound-agent)
 
 ### Usage
 
