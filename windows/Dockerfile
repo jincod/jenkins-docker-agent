@@ -1,19 +1,9 @@
-FROM openjdk:15-jdk-windowsservercore-1809
-
-SHELL ["cmd", "/S", "/C"]
-
-RUN NET USER jenkins /add & \
-    NET LOCALGROUP Administrators /add jenkins & \
-    WMIC USERACCOUNT WHERE Name='jenkins' SET PasswordExpires=FALSE
-
-USER jenkins
+FROM jenkins/agent:4.10-3-jdk11-windowsservercore-ltsc2019
 
 # Install .NET 4.7.2
-RUN powershell Invoke-WebRequest -Uri "https://download.microsoft.com/download/3/B/F/3BFB9C35-405D-45DF-BDAF-0EB57D047888/NDP472-DevPack-ENU.exe" -OutFile dotnet-framework-installer.exe & \
-    .\dotnet-framework-installer.exe /q & \
-    del .\dotnet-framework-installer.exe
-
-SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+RUN Invoke-WebRequest -Uri "https://download.visualstudio.microsoft.com/download/pr/158dce74-251c-4af3-b8cc-4608621341c8/9c1e178a11f55478e2112714a3897c1a/ndp472-devpack-enu.exe" -OutFile dotnet-framework-installer.exe; \
+    Start-Process -Wait -PassThru -FilePath dotnet-framework-installer.exe -ArgumentList '/q'; \
+    Remove-Item dotnet-framework-installer.exe
 
 # Build Tools
 # https://www.visualstudio.com/downloads/#vstool-2017
@@ -54,16 +44,8 @@ RUN Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.e
     rm nuget.exe
 
 # GIT
-# https://support.cloudbees.com/hc/en-us/articles/221046888-Build-Hang-or-Fail-with-Git-for-Windows
-ARG GIT_VERSION=2.25.1
 ARG GIT_MAIL_ADDRESS=jenkins.slave@example.com
 ARG GIT_USERNAME=Jenkins
-
-# Set certificate policy to allow connections for SSL3, TLS, TLS12 and TLS12
-RUN [System.Net.ServicePointManager]::SecurityProtocol = 3072 -bor 768 -bor 192 -bor 48; \
-    Invoke-WebRequest $('https://github.com/git-for-windows/git/releases/download/v{0}.windows.1/Git-{0}-64-bit.exe' -f $env:GIT_VERSION) -OutFile git-installer.exe -UseBasicParsing; \
-    cmd /c start /WAIT git-installer.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /NOCANCEL /SP- /LOG /o:UseCredentialManager=Disabled; \
-    rm git-installer.exe
 
 RUN git config --global user.email "$env:GIT_MAIL_ADDRESS"; \
     git config --global user.name "$env:GIT_USERNAME"
@@ -78,18 +60,12 @@ RUN Invoke-WebRequest $('https://nodejs.org/dist/v{0}/node-v{0}-x64.msi' -f $env
     Start-Process -FilePath msiexec -ArgumentList /q, /i, node.msi -Wait ; \
     rm node.msi
 
-ARG VERSION=4.3
-
 ENV JENKINS_URL= \
     JENKINS_AGENT_NAME= \
     JENKINS_SECRET= \
     USERNAME= \
     USER_TOKEN=
 
-RUN [System.Net.ServicePointManager]::SecurityProtocol = 3072 -bor 768 -bor 192 -bor 48; \
-    Invoke-WebRequest -Uri $('https://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/{0}/remoting-{0}.jar' -f $env:VERSION) -UseBasicParsing -OutFile remoting.jar; \
-    mkdir \jenkins
+# VOLUME C:/Users/jenkins/Work
 
-# VOLUME C:\\jenkins
-
-CMD java -jar remoting.jar -jnlpUrl $env:JENKINS_URL/computer/$env:JENKINS_AGENT_NAME/slave-agent.jnlp -secret $env:JENKINS_SECRET
+CMD java -jar C:/ProgramData/Jenkins/agent.jar -workDir C:/Users/jenkins/Work -jnlpUrl $env:JENKINS_URL/computer/$env:JENKINS_AGENT_NAME/jenkins-agent.jnlp -secret $env:JENKINS_SECRET
