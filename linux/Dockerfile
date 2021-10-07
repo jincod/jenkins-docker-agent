@@ -3,8 +3,10 @@ FROM jenkins/inbound-agent:4.10-3
 USER root
 
 # nodejs
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-  && apt-get install -y nodejs
+RUN apt-get update \
+    && apt install -y curl \
+    && curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+    && apt-get install -y nodejs
 
 # docker cli
 RUN apt-get update \
@@ -46,7 +48,7 @@ RUN apt-get update && \
 
 # azure-cli
 RUN apt-get update && \
-    apt-get -f -y install curl apt-transport-https lsb-release gnupg python3-pip python-pip && \
+    apt-get -f -y install curl apt-transport-https lsb-release gnupg python3-pip && \
     curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.asc.gpg && \
     CLI_REPO=$(lsb_release -cs) && \
     echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ ${CLI_REPO} main" \
