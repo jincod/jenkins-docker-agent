@@ -5,8 +5,8 @@ image:
 - ubuntu
 
 build_script:
-  - cmd: docker build -t jenkins-slave-windows .\windows
-  - sh: docker build -t jenkins-slave-linux ./linux
+  - cmd: docker build -t jenkins-agent-windows .\windows
+  - sh: docker build -t jenkins-agent-linux ./linux
 
 services:
 - docker
@@ -15,6 +15,6 @@ services:
 #   - path: '*.tag.gz'
 
 # after_build:
-#   - cmd: docker save jenkins-slave-windows --output jenkins-slave-windows.tar.gz
-#   - sh: docker save jenkins-slave-linux --output jenkins-slave-linux.tar.gz
+#   - cmd: docker save jenkins-agent-windows --output jenkins-agent-windows.tar.gz
+#   - sh: docker save jenkins-agent-linux --output jenkins-agent-linux.tar.gz
 #   - ps: Get-ChildItem .\*.tar.gz | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }

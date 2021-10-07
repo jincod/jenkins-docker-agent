@@ -44,7 +44,7 @@ RUN Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.e
     rm nuget.exe
 
 # GIT
-ARG GIT_MAIL_ADDRESS=jenkins.slave@example.com
+ARG GIT_MAIL_ADDRESS=jenkins.agent@example.com
 ARG GIT_USERNAME=Jenkins
 
 RUN git config --global user.email "$env:GIT_MAIL_ADDRESS"; \

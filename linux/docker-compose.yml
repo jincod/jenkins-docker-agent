@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  slave-linux:
-    image: jenkins-slave-linux
+  linux:
+    image: jenkins-agent-linux
     restart: always
     environment:
       --JENKINS_URL=
