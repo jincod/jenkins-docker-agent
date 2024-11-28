@@ -34,28 +34,29 @@ RUN apt-get update \
   && apt-get update \
   && apt-get install -y --allow-unauthenticated ansible
 
-# AWS CLI
-RUN apt-get update && \
-    apt-get install -y \
-        python3 \
-        python3-pip \
-        python3-setuptools \
-        groff \
-        less \
-    && python3 -m pip install --upgrade pip \
-    && apt-get clean \
-    && python3 -m pip --no-cache-dir install --upgrade awscli
+# temporary disabled
+# # AWS CLI
+# RUN apt-get update && \
+#     apt-get install -y \
+#         python3 \
+#         python3-pip \
+#         python3-setuptools \
+#         groff \
+#         less \
+#     && python3 -m pip install --upgrade pip \
+#     && apt-get clean \
+#     && python3 -m pip --no-cache-dir install --upgrade awscli
 
-# azure-cli
-RUN apt-get update && \
-    apt-get -f -y install curl apt-transport-https lsb-release gnupg python3-pip && \
-    curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.asc.gpg && \
-    CLI_REPO=$(lsb_release -cs) && \
-    echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ ${CLI_REPO} main" \
-    > /etc/apt/sources.list.d/azure-cli.list \
-    && apt-get update \
-    && apt-get install -y azure-cli \
-    && rm -rf /var/lib/apt/lists/*
+# # azure-cli
+# RUN apt-get update && \
+#     apt-get -f -y install curl apt-transport-https lsb-release gnupg python3-pip && \
+#     curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.asc.gpg && \
+#     CLI_REPO=$(lsb_release -cs) && \
+#     echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ ${CLI_REPO} main" \
+#     > /etc/apt/sources.list.d/azure-cli.list \
+#     && apt-get update \
+#     && apt-get install -y azure-cli \
+#     && rm -rf /var/lib/apt/lists/*
 
 # dotnet
 ENV NUGET_XMLDOC_MODE=skip \
