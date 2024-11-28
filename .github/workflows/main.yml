@@ -12,6 +12,9 @@ jobs:
     env:
       IMAGE_NAME: jenkins/inbound-agent-linux
 
+    permissions:
+      packages: write
+
     steps:
       - uses: actions/checkout@v2
       
