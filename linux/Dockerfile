@@ -1,11 +1,11 @@
-FROM jenkins/inbound-agent:4.13.3-1
+FROM jenkins/inbound-agent:3283.v92c105e0f819-1
 
 USER root
 
 # nodejs
 RUN apt-get update \
     && apt install -y curl \
-    && curl -sL https://deb.nodesource.com/setup_20.x | bash - \
+    && curl -sL https://deb.nodesource.com/setup_22.x | bash - \
     && apt-get install -y nodejs
 
 # docker cli
